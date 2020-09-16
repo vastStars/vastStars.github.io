@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Arial:300,300italic,400,400italic,700,700italic|Courier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis">
+<meta property="og:url" content="http://example.com/2019/11/12/redis/index.html">
+<meta property="og:site_name" content="longlongago">
+<meta property="og:description" content="Redis">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-12T09:02:42.000Z">
+<meta property="article:modified_time" content="2020-07-19T02:24:27.201Z">
+<meta property="article:author" content="holiday">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/11/12/redis/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>redis | longlongago</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">longlongago</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">is always</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Strings%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.1.</span> <span class="nav-text">Strings字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List%E5%88%97%E8%A1%A8"><span class="nav-number">1.2.</span> <span class="nav-text">List列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash%E5%93%88%E5%B8%8C"><span class="nav-number">1.3.</span> <span class="nav-text">Hash哈希</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sets%E4%B8%8Esorted-sets-%E9%9B%86%E5%90%88%E4%B8%8E%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="nav-number">1.4.</span> <span class="nav-text">sets与sorted sets 集合与有序集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bitmaps"><span class="nav-number">1.5.</span> <span class="nav-text">bitmaps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hyperloglogs"><span class="nav-number">1.6.</span> <span class="nav-text">hyperloglogs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KEYS-%E5%92%8C-SCAN"><span class="nav-number">2.</span> <span class="nav-text">KEYS 和 SCAN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash%E4%B8%8E%E4%B8%80%E8%87%B4%E6%80%A7hash"><span class="nav-number">3.</span> <span class="nav-text">hash与一致性hash</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hash"><span class="nav-number">3.1.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7hash"><span class="nav-number">3.2.</span> <span class="nav-text">一致性hash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slot"><span class="nav-number">4.</span> <span class="nav-text">Slot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%98%E6%B1%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">淘汰机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E8%AF%81%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">6.</span> <span class="nav-text">保证缓存与数据库一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">7.</span> <span class="nav-text">持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RDB"><span class="nav-number">7.1.</span> <span class="nav-text">RDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOF-append-only-file"><span class="nav-number">7.2.</span> <span class="nav-text">AOF(append-only file)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">7.3.</span> <span class="nav-text">混合持久化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pipelining"><span class="nav-number">8.</span> <span class="nav-text">Pipelining</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%83%AD%E7%82%B9%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">9.</span> <span class="nav-text">热点数据处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF%E4%B8%8E%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="nav-number">10.</span> <span class="nav-text">缓存穿透、缓存击穿与缓存雪崩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%9F%A5%E6%89%BEkey"><span class="nav-number">11.</span> <span class="nav-text">集群中查找key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E4%B8%8E%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97"><span class="nav-number">12.</span> <span class="nav-text">队列与延时队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E4%B8%8Ememcached%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">13.</span> <span class="nav-text">redis与memcached的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E9%9B%86%E7%BE%A4"><span class="nav-number">14.</span> <span class="nav-text">Redis集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA"><span class="nav-number">15.</span> <span class="nav-text">Redis集群搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E5%A4%A7key%E9%97%AE%E9%A2%98"><span class="nav-number">16.</span> <span class="nav-text">Redis 大key问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">17.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="holiday"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">holiday</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/12/redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="holiday">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="longlongago">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          redis
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-12 17:02:42" itemprop="dateCreated datePublished" datetime="2019-11-12T17:02:42+08:00">2019-11-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-07-19 10:24:27" itemprop="dateModified" datetime="2020-07-19T10:24:27+08:00">2020-07-19</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>Redis</strong></p>
+<a id="more"></a>
+
+<p>高性能高可用</p>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="Strings字符串"><a href="#Strings字符串" class="headerlink" title="Strings字符串"></a>Strings字符串</h3><p>set,get</p>
+<p><strong>set key value</strong>  /  <strong>get key</strong>  /  <strong>MSET key1 value1 key2 value2</strong>  / <strong>MGET key1 key2</strong> /  <strong>GETSET key value1</strong> 返回value</p>
+<p><strong>Redis 规定了字符串的长度不得超过 512 MB。</strong></p>
+<h3 id="List列表"><a href="#List列表" class="headerlink" title="List列表"></a>List列表</h3><p>lpush, rpush, lpop, rpop, lrange</p>
+<p><strong>lpush list value</strong>  / <strong>rpush list value</strong>  /  <strong>lrange mylist 0 -1</strong> / <strong>LPOP list 队列是先进先出的数据结构 读取一次value</strong>  /  <strong>RPOP books 栈是先进后出的数据结构</strong></p>
+<h3 id="Hash哈希"><a href="#Hash哈希" class="headerlink" title="Hash哈希"></a>Hash哈希</h3><p>hset, hget, hgetall</p>
+<p><strong>扩容</strong>： 渐进式<code>rehash</code>，保留两个新旧<strong>hash</strong>结构，扩容的数组为原来的两倍，如果redis正在做<strong>bgsave</strong>，尽量不去扩容，如果长度达到一维数组的5倍，强制扩容。</p>
+<p>底层数据结构：ziplist与hashtable</p>
+<p>ziplist结构：zlbytes, zltail, alten, entry，···</p>
+<p>两个条件：hash-max-ziplist-entries 512  数据项(filed-value)超过512; hash-max-ziplist-value 64 value长度超过64; </p>
+<p>缺点：每次插入修改可能会造成内存拷贝，数据够多时查询速度降低。</p>
+<h3 id="sets与sorted-sets-集合与有序集合"><a href="#sets与sorted-sets-集合与有序集合" class="headerlink" title="sets与sorted sets 集合与有序集合"></a>sets与sorted sets 集合与有序集合</h3><p>sadd, spop, smembers, sunion;<br>zadd, zrange, zrem, acard; </p>
+<h3 id="bitmaps"><a href="#bitmaps" class="headerlink" title="bitmaps"></a>bitmaps</h3><p>bloom filter 布隆过滤器</p>
+<p><strong>bf.add</strong> / <strong>bd.madd</strong> / <strong>bf.mexists</strong></p>
+<h3 id="hyperloglogs"><a href="#hyperloglogs" class="headerlink" title="hyperloglogs"></a>hyperloglogs</h3><h2 id="KEYS-和-SCAN"><a href="#KEYS-和-SCAN" class="headerlink" title="KEYS 和 SCAN"></a>KEYS 和 SCAN</h2><ul>
+<li><p><strong>KEYS pattern</strong></p>
+<p>时间复杂度为O(N)，但恒定时间短，在40毫秒内可扫描百万个key。当redis中的key非常多时，对于内存的消耗和redis服务器都是一个隐患。</p>
+</li>
+<li><p><strong>SCAN cursor [MATCH pattern] [COUNT count]</strong></p>
+<p><code>scan 0 MATCH *1* COUNT 1000</code>，<strong>count</strong>控制返回多少元素</p>
+</li>
+</ul>
+<h2 id="hash与一致性hash"><a href="#hash与一致性hash" class="headerlink" title="hash与一致性hash"></a>hash与一致性hash</h2><p>在Redis集群，多个主情况下，进行数据的随机存储。</p>
+<h3 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h3><p>假设有5个主Redis库，hash(data)%5，来确定服务器。但在服务器数量出现变动时，hash会变得不可靠，无法从缓存中获取数据，则会向数据库请求数据。</p>
+<h3 id="一致性hash"><a href="#一致性hash" class="headerlink" title="一致性hash"></a>一致性hash</h3><p>一致性hash对2^32取模，将整个哈希值空间组成一个虚拟的圆环（0-2^32-1）,称为hash环;<br>根据key计算，确定在环上的位置，沿顺时针方向向前查找，第一台服务器就是定位到的服务器。</p>
+<h2 id="Slot"><a href="#Slot" class="headerlink" title="Slot"></a>Slot</h2><p>redis有16384个hash槽(Slot). 建议最多1000个master。Redis Cluster 会对key使用CRC16算法计算hash，然后对16384取模来确定key所属槽（hash tag会打破这个规则，保证多个键被分配到同一个槽）。</p>
+<h2 id="淘汰机制"><a href="#淘汰机制" class="headerlink" title="淘汰机制"></a>淘汰机制</h2><p>过期策略： 惰性删除：假如你的过期 key，靠定期删除没有被删除掉，还停留在内存里，除非你的系统去查一下那个 key，才会被 redis 给删除掉。</p>
+<p>定期删除：redis 默认是每隔 100ms 就<strong>随机抽取</strong>一些设置了过期时间的 key，检查其是否过期。</p>
+<p><code>maxmemory</code>，最大内存设置，达到后会触发淘汰机制。</p>
+<ul>
+<li><p><code>volatile-lru(Least Recently Used)</code>： 从设置过期时间中选最少使用的淘汰</p>
+<p>一个FIFO队列</p>
+<ul>
+<li>新数据插入链表头部</li>
+<li>每当缓存命中时，将数据移至链表头部</li>
+<li>当链表满的时候，丢弃</li>
+</ul>
+</li>
+<li><p><code>volatile-ttl(time to live)</code>:  从设置过期时间中选将要过期的淘汰</p>
+</li>
+<li><p><code>volatile-random</code>: 从设置过期时间中随机淘汰</p>
+</li>
+<li><p><code>volatile-lfu</code>: 从设置过期时间中淘汰不经常使用的</p>
+<p><strong>Ilfu-log-factor 10</strong></p>
+<p><strong>lfu-decay-time 1</strong>：counter随时间的递减速度</p>
+</li>
+<li><p><code>allkeys-lru</code>: 当内存不足以容纳新数据时，移除最少使用的</p>
+</li>
+<li><p><code>allkeys-random</code>: 随机淘汰</p>
+</li>
+<li><p><code>allkeys-lfu(Least Frequently Used)</code>: 移除不经常使用的</p>
+</li>
+</ul>
+<h2 id="保证缓存与数据库一致性"><a href="#保证缓存与数据库一致性" class="headerlink" title="保证缓存与数据库一致性"></a>保证缓存与数据库一致性</h2><ul>
+<li><p><strong>读请求和写请求串行化</strong>，串到一个<strong>内存队列</strong>里去。</p>
+</li>
+<li><p><strong>Cache Aside Pattern</strong>：</p>
+<p>读的时候，先读缓存，没有的话，读数据库，然后将取出的数据放入缓存。</p>
+<p>更新的时候，先更新数据库，再删除缓存。</p>
+</li>
+<li><p>最初级的缓存不一致问题及解决方案</p>
+<p>问题：更新数据库成功，删除缓存失败。</p>
+<p>解决：先删除缓存，再更新数据库。</p>
+</li>
+<li><p>复杂的缓存不一致问题</p>
+<p>问题：先删除了缓存，然后要去修改数据库，此时还没修改。一个请求过来，去读缓存，发现缓存空了，去查询数据库，<strong>查到了修改前的旧数据</strong>，放到了缓存中。</p>
+</li>
+</ul>
+<h2 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h2><h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><p>save 900 1 #在900秒(15分钟)之后，如果至少有1个key发生变化，Redis就会自动触发BGSAVE命令创建快照。`</p>
+<p>bgsave原理: fork和cow(copy on write);fork创建子线程，cow与父进程共享写数据。</p>
+<h3 id="AOF-append-only-file"><a href="#AOF-append-only-file" class="headerlink" title="AOF(append-only file)"></a>AOF(append-only file)</h3><p>开启： <code>appendonly</code> yes<br>不同持久化方式：</p>
+<ul>
+<li>appendsync always #每次修改就写入</li>
+<li>appendsync everysec #没分钟同步一次 </li>
+<li>appendsync no # 让操作系统决定何时同步</li>
+</ul>
+<p>提供了Rewrite功能，可以重写AOF文件，只保留能把数据更新到最新的结果集，可通过<code>bgrewriteaof</code>命令来触发。</p>
+<ul>
+<li><code>auto-aof-rewrite-percentage 100</code> 增长达到100%</li>
+<li><code>auto-aof-rewrite-min-size 64mb</code> 没超过64M 不重写</li>
+</ul>
+<h3 id="混合持久化"><a href="#混合持久化" class="headerlink" title="混合持久化"></a>混合持久化</h3><p>重启<strong>redis</strong>时使用<strong>rdb</strong>来恢复会丢失大量数据，使用<strong>AOF</strong>日志重放，性能会比<strong>rdb</strong>慢很多。</p>
+<h2 id="Pipelining"><a href="#Pipelining" class="headerlink" title="Pipelining"></a>Pipelining</h2><p>执行连续且无相关性的命令。</p>
+<h2 id="热点数据处理"><a href="#热点数据处理" class="headerlink" title="热点数据处理"></a>热点数据处理</h2><p>防止大量请求同一台机器上的key.</p>
+<ul>
+<li>本地缓存</li>
+<li>proxy 计算</li>
+</ul>
+<h2 id="缓存穿透、缓存击穿与缓存雪崩"><a href="#缓存穿透、缓存击穿与缓存雪崩" class="headerlink" title="缓存穿透、缓存击穿与缓存雪崩"></a>缓存穿透、缓存击穿与缓存雪崩</h2><ul>
+<li><p><strong>缓存穿透</strong>： 获取不存在的数据。就是大量请求的 key 根本不存在于缓存中，导致请求直接到了数据库上。</p>
+<p>解决方法：</p>
+<ul>
+<li>缓存无效key</li>
+<li>不隆过滤器：把所有可能存在的请求的值都存放在布隆过滤器中。</li>
+</ul>
+</li>
+<li><p><strong>缓存击穿</strong>： 热点key失效。</p>
+</li>
+<li><p><strong>缓存雪崩</strong>：缓存同一时间大面积失效，后面的请求都会落到数据库上，造成数据库短时间内承受大量请求而崩掉。</p>
+<p>解决方法：</p>
+<ul>
+<li>事前：尽量保证redis集群高可用，发现宕机尽快补上。选择合适的淘汰机制。</li>
+<li>事中：限流与降级</li>
+<li>事后：利用 redis 持久化机制保存的数据尽快恢复缓存</li>
+</ul>
+</li>
+</ul>
+<h2 id="集群中查找key"><a href="#集群中查找key" class="headerlink" title="集群中查找key"></a>集群中查找key</h2><p>cluster nodes<br>cluster keyslot key<br>cluster slot</p>
+<h2 id="队列与延时队列"><a href="#队列与延时队列" class="headerlink" title="队列与延时队列"></a>队列与延时队列</h2><p>队列可以用list来实现，rpush产生消息，lpop消费消息，没消息时适当sleep，也可以用blpop.<br>延时队列 使用sortedset，拿时间戳做score。消息内容作为key，zrangebyscore来获取数据。</p>
+<h2 id="redis与memcached的区别"><a href="#redis与memcached的区别" class="headerlink" title="redis与memcached的区别"></a>redis与memcached的区别</h2><ol>
+<li>redis支持更丰富的数据类型</li>
+<li>redis支持持久化</li>
+<li>redis支持集群</li>
+<li>redis单线程多路IO复用 </li>
+</ol>
+<h2 id="Redis集群"><a href="#Redis集群" class="headerlink" title="Redis集群"></a>Redis集群</h2><p><code>slave-server-stale-data=no</code>，复制时从不响应，返回SYNC with master in progress<br><code>repl-timeout</code>，超时时间<br><code>repl-ping-slave-period</code>, 心跳检查频率</p>
+<h2 id="Redis集群搭建"><a href="#Redis集群搭建" class="headerlink" title="Redis集群搭建"></a>Redis集群搭建</h2><pre>sudo ufw allow 6379</pre>
+<p>sudo iptables -A INPUT -p tcp –dport 6379 -j ACCEPT</p>
+<p>cluster-enabled yes<br>cluster-config-file nodes.conf<br>cluster-node-timeout 5000<br>appendonly yes</p>
+<p><code> ../src/redis-cli --cluster create 192.168.1.39:7000 192.168.1.39:7001 192.168.1.39:7002 192.168.1.39:7003 192.168.1.39:7004 192.168.1.39:7005 --cluster-replicas 1</code></p>
+<h2 id="Redis-大key问题"><a href="#Redis-大key问题" class="headerlink" title="Redis 大key问题"></a>Redis 大key问题</h2><p>问题： 读写时间过长，阻塞线程</p>
+<p>可以通过 redis-cli –bigkeys与scan命令查找，或者Redis-rdb-cli工具。</p>
+<p>4.0后引入memory usage命令和lazyfree机制</p>
+<p>1几种数据类型，使用方式，场景  2sorted set底层原理，和常用场景。3redis分布式锁，红锁。4击穿击透雪崩，及其预防。5lru算法 6大key的查找清除。7redis单线程还能这么快的原因，io多路复用。8redis集群分片</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5d8f0f7de51d4578323d51d0">https://juejin.im/post/5d8f0f7de51d4578323d51d0</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/11/08/mysql/" rel="prev" title="mysql学习">
+                  <i class="fa fa-chevron-left"></i> mysql学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/11/18/spring-cloud/" rel="next" title="分布式微服务">
+                  分布式微服务 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">holiday</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">37k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:07</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+</html>

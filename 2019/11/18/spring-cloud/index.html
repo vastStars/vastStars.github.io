@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Arial:300,300italic,400,400italic,700,700italic|Courier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="分布式微服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式微服务">
+<meta property="og:url" content="http://example.com/2019/11/18/spring-cloud/index.html">
+<meta property="og:site_name" content="longlongago">
+<meta property="og:description" content="分布式微服务">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-18T02:52:48.000Z">
+<meta property="article:modified_time" content="2020-09-16T13:54:16.492Z">
+<meta property="article:author" content="holiday">
+<meta property="article:tag" content="Spring Cloud">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/11/18/spring-cloud/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>分布式微服务 | longlongago</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">longlongago</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">is always</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Eureka%E4%B8%8EZookeeper"><span class="nav-number">1.</span> <span class="nav-text">Eureka与Zookeeper</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Eureka"><span class="nav-number">1.1.</span> <span class="nav-text">Eureka</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zookeepe"><span class="nav-number">1.2.</span> <span class="nav-text">Zookeepe</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">分布式事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XA%E6%96%B9%E6%A1%88"><span class="nav-number">2.1.</span> <span class="nav-text">XA方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCC%E6%96%B9%E6%A1%88"><span class="nav-number">2.2.</span> <span class="nav-text">TCC方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%B6%88%E6%81%AF%E8%A1%A8"><span class="nav-number">2.3.</span> <span class="nav-text">本地消息表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%9D%A0%E6%B6%88%E6%81%AF%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">2.4.</span> <span class="nav-text">可靠消息最终一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E5%8A%AA%E5%8A%9B%E9%80%9A%E7%9F%A5%E6%96%B9%E6%A1%88"><span class="nav-number">2.5.</span> <span class="nav-text">最大努力通知方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">3.</span> <span class="nav-text">分布式锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">限流算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%B9%E6%80%A7%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">客户端弹性模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Hystrix%E5%AE%9E%E7%8E%B0%E6%96%AD%E8%B7%AF%E7%94%B1"><span class="nav-number">5.1.</span> <span class="nav-text">使用Hystrix实现断路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E5%A4%87%E5%A4%84%E7%90%86"><span class="nav-number">5.2.</span> <span class="nav-text">后备处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%88%B1%E5%A3%81%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.3.</span> <span class="nav-text">舱壁模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx%E4%B8%8ERibbon"><span class="nav-number">6.</span> <span class="nav-text">Nginx与Ribbon</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AE%97%E6%B3%95"><span class="nav-number">6.1.</span> <span class="nav-text">负载均衡算法</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="holiday"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">holiday</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/18/spring-cloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="holiday">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="longlongago">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          分布式微服务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-18 10:52:48" itemprop="dateCreated datePublished" datetime="2019-11-18T10:52:48+08:00">2019-11-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-09-16 21:54:16" itemprop="dateModified" datetime="2020-09-16T21:54:16+08:00">2020-09-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Spring/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>分布式微服务</p>
+<a id="more"></a>
+
+<h2 id="Eureka与Zookeeper"><a href="#Eureka与Zookeeper" class="headerlink" title="Eureka与Zookeeper"></a>Eureka与Zookeeper</h2><p>CAP定理： <strong>Consistency</strong>（）一致性 、<strong>Availability</strong>（可用性）、 <strong>Partition tolerance</strong>（分区容错性，分布式系统在遇到任何网络分区故障的时候，仍然需要能够保证对外提供满足<strong>一致性</strong>和<strong>可用性</strong>的服务，除非是整个网络环境都发生了故障。）</p>
+<p><strong>base</strong>理论: <strong>Basically Available</strong> 基本可用, <strong>Soft-State</strong> 软状态; <strong>Eventually Consistent</strong> 最终一致性。 </p>
+<h3 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h3><p>Eureka基于AP协议，采用Peer to Peer 对等通信。</p>
+<h3 id="Zookeepe"><a href="#Zookeepe" class="headerlink" title="Zookeepe"></a>Zookeepe</h3><p>Zookeeper基于CP协议，基于ZAB（Zookeeper Atomic Broadcast）来保证一致性，选取leader来管理通信。<br>分布式协调，分布式锁，注册中心</p>
+<h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><h3 id="XA方案"><a href="#XA方案" class="headerlink" title="XA方案"></a>XA方案</h3><h3 id="TCC方案"><a href="#TCC方案" class="headerlink" title="TCC方案"></a>TCC方案</h3><h3 id="本地消息表"><a href="#本地消息表" class="headerlink" title="本地消息表"></a>本地消息表</h3><h3 id="可靠消息最终一致性"><a href="#可靠消息最终一致性" class="headerlink" title="可靠消息最终一致性"></a>可靠消息最终一致性</h3><h3 id="最大努力通知方案"><a href="#最大努力通知方案" class="headerlink" title="最大努力通知方案"></a>最大努力通知方案</h3><h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><p>数据库，redis redlock，zookeeper</p>
+<h2 id="限流算法"><a href="#限流算法" class="headerlink" title="限流算法"></a>限流算法</h2><ul>
+<li>固定窗口计数器算法<ul>
+<li>将时间划为多个窗口，22:00:00–22:00:01–22:00:02</li>
+<li>每个窗口每次请求就加一</li>
+<li>如果计数器超过了限制数量，则将本窗口的所有请求丢弃，等到达下一秒时，计数器重置</li>
+</ul>
+</li>
+<li>滑动窗口计数器</li>
+<li>漏桶<ul>
+<li>首先有一个容器，每个请求就放入容器中</li>
+<li>容器以固定速率释放请求</li>
+<li>容器满了，请求会被丢弃</li>
+</ul>
+</li>
+<li>令牌桶<ul>
+<li>令牌以固定速率生成</li>
+<li>生成的令牌放入桶中，如果令牌桶满了多余的令牌直接丢弃，当有请求时，会先尝试从桶中获取令牌，取到了令牌才能执行</li>
+<li>桶空了，尝试获取令牌的请求被丢弃</li>
+</ul>
+</li>
+</ul>
+<h2 id="客户端弹性模式"><a href="#客户端弹性模式" class="headerlink" title="客户端弹性模式"></a>客户端弹性模式</h2><ul>
+<li><strong>客户端负载均衡模式（ client load balance ）</strong></li>
+<li><strong>断路由模式（ circuit breaker ）</strong></li>
+<li><strong>后备模式（ fallback ）</strong></li>
+<li><strong>舱壁模式（ bulkhead ）</strong></li>
+</ul>
+<h3 id="使用Hystrix实现断路由"><a href="#使用Hystrix实现断路由" class="headerlink" title="使用Hystrix实现断路由"></a>使用Hystrix实现断路由</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LicenseService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@HystrixCommand</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getLicenseByOrg</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@HystrixCommand</span> 超时时间默认<span class="number">1000</span>ms, 错误显示：getLicenseByOrg time-out and fallback failed.</span><br><span class="line"><span class="meta">@HystrixCommand(commandProperties =&#123;</span></span><br><span class="line"><span class="meta">            @HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;, 											value = &quot;12000&quot;)</span></span><br><span class="line"><span class="meta">&#125; )</span>；设置超时为<span class="number">12</span>秒</span><br><span class="line">         </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="后备处理"><a href="#后备处理" class="headerlink" title="后备处理"></a>后备处理</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HystrixCommand(fallbackMethod = &quot;buildFallbackLicenseList&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getLicenseByOrg</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> List&lt;String&gt; <span class="title">buildFallbackLicenseList</span><span class="params">()</span></span>&#123;</span><br><span class="line">      List&lt;String&gt; fallbackString = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">      fallbackString.add(<span class="string">&quot;请求失败了&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> fallbackString;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="舱壁模式"><a href="#舱壁模式" class="headerlink" title="舱壁模式"></a>舱壁模式</h3><p>通常需要调用多个微服务来完成特定的任务，在不使用舱壁模式的情况下，这些默认调用是使用同一批线程来执行调用的，这些线程是为了处理Java整个容器的请求而预留的。在存在大量请求的条件下，同时堵塞请求，最早导致Java容器崩溃。舱壁模式将远程资源调用隔离在自己的线程中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HystrixCommand(threadPoolKey = &quot;licenseByOrgThreadPool&quot;,</span></span><br><span class="line"><span class="meta">         threadPoolProperties = &#123;</span></span><br><span class="line"><span class="meta">             @HystrixProperty(name = &quot;coreSize&quot;, value = &quot;10&quot;),</span></span><br><span class="line"><span class="meta">             @HystrixProperty(name = &quot;maxQueueSize&quot;, value = &quot;20&quot;)</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">         &#125;)</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getLicenseByOrg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nginx与Ribbon"><a href="#Nginx与Ribbon" class="headerlink" title="Nginx与Ribbon"></a>Nginx与Ribbon</h2><p>在 <code>Nginx</code> 中请求是先进入负载均衡器，而在 <code>Ribbon</code> 中是先在客户端进行负载均衡才进行请求的。</p>
+<h3 id="负载均衡算法"><a href="#负载均衡算法" class="headerlink" title="负载均衡算法"></a>负载均衡算法</h3><ul>
+<li>轮询策略（<strong>Round Robin</strong>）：依次分配给后台服务器。</li>
+<li>加权轮询（<strong>Weighted Round Robin</strong>）：加权本质是一种带优先级的方式，加权轮询就是一种改进的轮询算法，轮询算法是权值相同的加权轮询。</li>
+<li>随机策略（<strong>RandomRule</strong>）：从所有可用中选一个。</li>
+<li>哈希与一致性哈希</li>
+<li>重试策略：先按照 <strong>RoundRobinRule</strong> 策略获取 <strong>provider</strong>，若获取失败，则在指定的时限内重试。默认的时限为 500 毫秒。</li>
+</ul>
+<p>熔断，降级，限流，隔离，超时处理</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring-Cloud/" rel="tag"># Spring Cloud</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/11/12/redis/" rel="prev" title="redis">
+                  <i class="fa fa-chevron-left"></i> redis
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/01/03/linux/" rel="next" title="Linux">
+                  Linux <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">holiday</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">37k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:07</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+</html>

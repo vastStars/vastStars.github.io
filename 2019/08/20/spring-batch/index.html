@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Arial:300,300italic,400,400italic,700,700italic|Courier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="spring-batch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring-batch">
+<meta property="og:url" content="http://example.com/2019/08/20/spring-batch/index.html">
+<meta property="og:site_name" content="longlongago">
+<meta property="og:description" content="spring-batch">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-20T02:41:39.000Z">
+<meta property="article:modified_time" content="2020-06-22T08:40:27.501Z">
+<meta property="article:author" content="holiday">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/08/20/spring-batch/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>spring-batch | longlongago</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">longlongago</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">is always</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Batch-Architecture"><span class="nav-number">1.1.</span> <span class="nav-text">Spring Batch Architecture</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8E%E8%BF%90%E8%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">配置与运行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Restartability-%E4%B8%8D%E5%85%81%E8%AE%B8%E9%87%8D%E6%96%B0%E5%90%AF%E5%8A%A8"><span class="nav-number">2.1.</span> <span class="nav-text">Restartability 不允许重新启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#job-Listener"><span class="nav-number">2.2.</span> <span class="nav-text">job Listener</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JobParametersValidator"><span class="nav-number">2.3.</span> <span class="nav-text">JobParametersValidator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Override-BatchConfigurer"><span class="nav-number">2.4.</span> <span class="nav-text">Override BatchConfigurer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JobRepository"><span class="nav-number">2.4.1.</span> <span class="nav-text">JobRepository</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#configuring-Step"><span class="nav-number">3.</span> <span class="nav-text">configuring Step</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%90%AF"><span class="nav-number">4.</span> <span class="nav-text">重启</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="holiday"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">holiday</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/20/spring-batch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="holiday">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="longlongago">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          spring-batch
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-08-20 10:41:39" itemprop="dateCreated datePublished" datetime="2019-08-20T10:41:39+08:00">2019-08-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-06-22 16:40:27" itemprop="dateModified" datetime="2020-06-22T16:40:27+08:00">2020-06-22</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Spring/Batch/" itemprop="url" rel="index"><span itemprop="name">Batch</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">spring-batch</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>Spring Batch</strong></p>
+<a id="more"></a>
+
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Spring Batch是一个轻量级，全面的批处理框架，旨在开发对企业系统日常运营至关重要的强大批处理应用程序。<br> 不是一个调度框架,与调度框架一起使用，而不是替换。<br> 应用场景: 读取大量记录 -&gt; 逻辑处理 -&gt; 回写</p>
+<h3 id="Spring-Batch-Architecture"><a href="#Spring-Batch-Architecture" class="headerlink" title="Spring Batch Architecture"></a>Spring Batch Architecture</h3><p><span>三个主要的高级组件: application,core和architecture,Batch Core包含启动和控制批处理作业所需的核心运行时类。它包括 JobLauncher,<br>Job和Step的实现。 Application和Core都 Build 在通用基础架构之上。此基础结构包含常见的读取器和编写器和服务(例如 RetryTemplate),<br>它们由应用程序开发人员（读者和编写者，如 ItemReader 和 ItemWriter ）和核心框架本身（重试，它是自己的库）使用。</span></p>
+<h2 id="配置与运行"><a href="#配置与运行" class="headerlink" title="配置与运行"></a>配置与运行</h2><ul>
+<li>JobBuilderFactory 创建job</li>
+<li>StepBuilderFactory 创建step</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Job job = jobBuilderFactory.get(<span class="string">&quot;exampleJob&quot;</span>)</span><br><span class="line">			  .start(step1())</span><br><span class="line">			  .next(step2())</span><br><span class="line">			  .end()</span><br><span class="line">			  .build();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Restartability-不允许重新启动"><a href="#Restartability-不允许重新启动" class="headerlink" title="Restartability 不允许重新启动"></a>Restartability 不允许重新启动</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.jobBuilderFactory.get(<span class="string">&quot;exampleJob&quot;</span>)</span><br><span class="line">.preventRestart()</span><br><span class="line">...</span><br><span class="line">.build();</span><br></pre></td></tr></table></figure>
+
+<h3 id="job-Listener"><a href="#job-Listener" class="headerlink" title="job Listener"></a>job Listener</h3><p>implements JobExecutionListener or use annotations @BeforeJob @AfterJob</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">this.jobBuilderFactory.get(&quot;exampleJob&quot;)</span><br><span class="line">.listener()</span><br><span class="line">...</span><br><span class="line">.build();</span><br></pre></td></tr></table></figure>
+
+<h3 id="JobParametersValidator"><a href="#JobParametersValidator" class="headerlink" title="JobParametersValidator"></a>JobParametersValidator</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">JobParameters jobParameters = <span class="keyword">new</span> JobParametersBuilder()</span><br><span class="line">                .addString(<span class="string">&quot;fileName&quot;</span>, <span class="string">&quot;123456&quot;</span>)</span><br><span class="line">                .addDate(<span class="string">&quot;date&quot;</span>, <span class="keyword">new</span> Date())</span><br><span class="line">                .toJobParameters();</span><br><span class="line">jobLauncher.run(exampleJob, jobParameters);</span><br><span class="line"><span class="comment">// 使用时间来表示唯一</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Job <span class="title">exampleJob</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.jobBuilderFactory.get(<span class="string">&quot;exampleJob&quot;</span>)</span><br><span class="line">                     .validator(parametersValidator())</span><br><span class="line">                     ...</span><br><span class="line">                     .build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Override-BatchConfigurer"><a href="#Override-BatchConfigurer" class="headerlink" title="Override BatchConfigurer"></a>Override BatchConfigurer</h3><ul>
+<li>JobRepository</li>
+<li>JobLauncher 启动器</li>
+<li>JobRegistry</li>
+<li>PlatformTransactionManager 事务管理</li>
+<li>JobBuilderFactory  job创建</li>
+<li>StepBuilderFactory step 创建</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> BatchConfigurer <span class="title">batchConfigurer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DefaultBatchConfigurer() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> PlatformTransactionManager <span class="title">getTransactionManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">new</span> MyTransactionManager();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                ...</span><br><span class="line">        &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="JobRepository"><a href="#JobRepository" class="headerlink" title="JobRepository"></a>JobRepository</h4><p>持久化配置,</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">batch:</span></span><br><span class="line">    <span class="attr">initialize-schema:</span> <span class="string">always</span></span><br><span class="line"><span class="comment"># 第一个job执行之前创建Meta-Data Schema(org/springframework/batch/core/migration)    </span></span><br><span class="line"><span class="comment"># 初始化后将值改为 never,否则再次启动的时候会再次创建Meta-Data Schema</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 持久化</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> JobRepository <span class="title">createJobRepository</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    JobRepositoryFactoryBean factory = <span class="keyword">new</span> JobRepositoryFactoryBean();</span><br><span class="line">    factory.setDataSource(dataSource);</span><br><span class="line">    factory.setTransactionManager(transactionManager);</span><br><span class="line">    factory.setIsolationLevelForCreate(<span class="string">&quot;ISOLATION_SERIALIZABLE&quot;</span>);</span><br><span class="line">    factory.setTablePrefix(<span class="string">&quot;BATCH_&quot;</span>);</span><br><span class="line">    factory.setMaxVarCharLength(<span class="number">1000</span>);</span><br><span class="line">    <span class="keyword">return</span> factory.getObject();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="configuring-Step"><a href="#configuring-Step" class="headerlink" title="configuring Step"></a>configuring Step</h2><h2 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/08/13/spring/" rel="prev" title="Spring">
+                  <i class="fa fa-chevron-left"></i> Spring
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/08/22/git/" rel="next" title="Git">
+                  Git <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">holiday</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">37k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:07</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+</html>

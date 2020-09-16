@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Arial:300,300italic,400,400italic,700,700italic|Courier+New:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="Java 基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 基础第二篇">
+<meta property="og:url" content="http://example.com/2019/11/06/Java-1/index.html">
+<meta property="og:site_name" content="longlongago">
+<meta property="og:description" content="Java 基础">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-06T03:34:21.000Z">
+<meta property="article:modified_time" content="2020-09-16T14:02:23.813Z">
+<meta property="article:author" content="holiday">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/11/06/Java-1/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Java 基础第二篇 | longlongago</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">longlongago</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">is always</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">Java内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E5%8D%8F%E8%AE%AE%EF%BC%9A-MESI"><span class="nav-number">1.1.</span> <span class="nav-text">缓存一致性协议： MESI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E5%90%88"><span class="nav-number">2.</span> <span class="nav-text">集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.1.</span> <span class="nav-text">HashMap底层实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">设计原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">逃逸分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E5%BC%95%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">四种引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK%E4%BB%A3%E7%90%86%E4%B8%8ECGLIB%E4%BB%A3%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">JDK代理与CGLIB代理</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="holiday"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">holiday</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/06/Java-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="holiday">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="longlongago">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java 基础第二篇
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-06 11:34:21" itemprop="dateCreated datePublished" datetime="2019-11-06T11:34:21+08:00">2019-11-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-09-16 22:02:23" itemprop="dateModified" datetime="2020-09-16T22:02:23+08:00">2020-09-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Java 基础</p>
+<a id="more"></a>
+<h2 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h2><p>Java内存模型试图屏蔽各种硬件和操作系统之间的内存访问差异，实现在各平台下都能达到一致性的内存访问效果。</p>
+<p>Java内存分为工作内存和主内存。<br>定义了8各操作来完成主内存和工作内存的交互工作：</p>
+<ul>
+<li>read： 从主内存读取</li>
+<li>load: 把read的值放入工作内存的变量副本中</li>
+<li>use： 执行引擎使用</li>
+<li>assign： 赋值给工作变量</li>
+<li>store： 把工作内存的值传到主内存</li>
+<li>write： 写入主内存的变量值</li>
+<li>lock</li>
+<li>unlock</li>
+</ul>
+<p>内存模型的三大特征： 原子性、可见性、有序性。</p>
+<h3 id="缓存一致性协议：-MESI"><a href="#缓存一致性协议：-MESI" class="headerlink" title="缓存一致性协议： MESI"></a>缓存一致性协议： MESI</h3><ul>
+<li><strong>Modified</strong>：当前CPU拥有最新数据，与主存不一致</li>
+<li><strong>Exclusive</strong>：只有当前CPU拥有，与主存中的数据一致</li>
+<li><strong>Shared</strong>：共享数据</li>
+<li><strong>Invalid</strong>：数据失效</li>
+</ul>
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><p><code>List, Set, Map</code>的区别：</p>
+<ul>
+<li><code>List</code>：一组有序不唯一的对象</li>
+<li><code>Set</code>：不允许有重复</li>
+<li><code>Map</code>：键值对，key不能重复</li>
+</ul>
+<p><code>List</code>:</p>
+<ul>
+<li><p><code>ArrayList</code>： 基于动态数组实现，支持快速随机访问（实现了<strong>RandomAccess</strong>接口）,<strong>add(E e)**时间复杂度为</strong>O(1)<strong>，删除和</strong>add(int index, E element)<strong>时间复杂度为</strong>O(n-i)**, 线程不安全。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DEFAULT_CAPACITY = <span class="number">10</span>; <span class="comment">// 默认初始容量为10</span></span><br><span class="line"><span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="number">1</span>); <span class="comment">// 扩容为原来的1.5倍</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p><code>LinkedList</code>： 基于双向链表实现，只能顺序访问，但可以快速的插入和删除元素，新增和删除时间复杂度**O(1)**，线程不安全。</p>
+</li>
+<li><p><code>Vector</code>： 与<code>ArrayList</code>类似，但是是线程安全的, 扩容一倍。</p>
+</li>
+</ul>
+<p><code>Set</code>:</p>
+<ul>
+<li><code>TreeSet</code>： 基于红黑树，支持有序操作</li>
+<li><code>HashSet</code>： 基于哈希表实现，支持快速查找，不支持有序操作。仅存储对象，**add()**添加元素</li>
+<li><code>LinkedHashSet</code>：具有<code>HashSet</code>的查找效率，且内部使用双向链表维护元素的插入顺序。</li>
+</ul>
+<p><code>Queue</code>:</p>
+<ul>
+<li><code>PriorityQueue</code>： 基于堆结构实现，可以用来实现优先队列。</li>
+</ul>
+<p><code>Map</code>:</p>
+<ul>
+<li><p><code>TreeMap</code>: 基于红黑树。</p>
+</li>
+<li><p><code>HashMap</code>: 基于哈希表。<strong>null</strong>可以作为key，但只能有一个。默认大小为16，扩容为2的幂次方。</p>
+<p>遍历：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HashMap.forEach(((key, value) -&gt; &#123;&#125;);</span><br><span class="line">                </span><br><span class="line"><span class="keyword">for</span> (String s: HashMap.keySet()) &#123;&#125;         </span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p><code>HashTable</code>: 遗留类，线程安全。默认初始大小为11，扩容为原来的2n+1。</p>
+</li>
+<li><p><code>LinkedHashMap</code>： 使用双向链表来维护元素的顺序。</p>
+</li>
+</ul>
+<p>CopyOnWriteArrayList</p>
+<h3 id="HashMap底层实现"><a href="#HashMap底层实现" class="headerlink" title="HashMap底层实现"></a>HashMap底层实现</h3><p>扩容2点幂次方，原因：</p>
+<p><strong>数据和链表</strong>。通过<strong>key</strong>的<strong>hashCode</strong>经过扰动函数处理后得到<strong>hash</strong>值，然后通过**(n - 1) &amp; hash<strong>来得到当前元素的位置，如何当前位置存在元素，就判断该元素与要存入的</strong>hash<strong>和</strong>key.equals(k)<strong>是否相同，相同就覆盖，如果不相同先判断是否有树结构，则直接添加，如果没有，在链表尾端添加元素，链表长度超过8转位红黑树，转红黑树之前会判断数组的长度是否小于</strong>64(MIN_TREEIFY_CAPACITY)**，如果小于怎先扩容。</p>
+<p>线程不安全解决：<code>ConcurrentHashMap&lt;K,V&gt;</code> 并行度，<code>Collections.synchronizedMap()</code></p>
+<h2 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h2><ul>
+<li>单一原则：规定每一个类都应该有一个单一的功能，并且该功能将类完全封装起来，一个类只负责一项职责，只能存在一个导致内变更的原因。</li>
+<li>里氏替换原则：使用基类的地方可以任意使用其子类，能保证子类完美替换基类。子类可以扩展父类的功能，但不能改变父类原有的功能。</li>
+<li>依赖倒置原则：高层模块不应该依赖低层模块，二者都应该依赖其抽象；抽象不应该依赖细节；细节应该依赖抽象。</li>
+<li>接口隔离原则：类的依赖关系应该建在最小的接口上，不应该依赖它不需要点接口。</li>
+<li>迪米特原则：类间解耦，一个对象应该其它对象保持最少的了解。</li>
+<li>开闭原则：尽量通过扩展软件实体来解决需求变化，而不是通过修改已有的代码来完成变化。</li>
+</ul>
+<h2 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a>逃逸分析</h2><h2 id="四种引用"><a href="#四种引用" class="headerlink" title="四种引用"></a>四种引用</h2><ul>
+<li>强引用：<code>Object obj = new Object();</code>，属于不可回收资源，垃圾回收器绝不会回收它。</li>
+<li>软饮用：<code>SoftReference softReference = new SoftReference(obj);</code>，可有可无，内存不足会回收。</li>
+<li>弱引用：<code>WeakReference weakReference = new WeakReference(obj)</code>，只要垃圾回收器扫描到就会回收。</li>
+<li>虚引用：<code>PhantomReference phantomReference = new PhantomReference(obj, referenceQueue);</code></li>
+</ul>
+<h2 id="JDK代理与CGLIB代理"><a href="#JDK代理与CGLIB代理" class="headerlink" title="JDK代理与CGLIB代理"></a>JDK代理与CGLIB代理</h2><ul>
+<li><p>java动态代理是利用反射机制生成一个实现代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理。JDK动态代理只能对实现了接口的类生成代理，而不能针对类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">实现InvocationHandler接口</span><br><span class="line">Proxy.newProxyInstance(ClassLoader loader, Class&lt;?&gt;[] interfaces, InvocationHandler h) 创建对象</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>cglib动态代理是利用asm开源包，对代理对象类的class文件加载进来，通过修改其字节码生成子类来处理。CGLIB是针对类实现代理，主要是对指定的类生成一个子类，覆盖其中的方法，所以该类或方法不能声明称final的。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/08/29/jvm/" rel="prev" title="JVM">
+                  <i class="fa fa-chevron-left"></i> JVM
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/11/08/mysql/" rel="next" title="mysql学习">
+                  mysql学习 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">holiday</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">37k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:07</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+</html>
