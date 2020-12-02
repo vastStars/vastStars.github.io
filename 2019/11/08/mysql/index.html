@@ -30,7 +30,7 @@
 <meta property="og:description" content="MySQL">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-08T05:32:08.000Z">
-<meta property="article:modified_time" content="2020-11-03T13:30:33.169Z">
+<meta property="article:modified_time" content="2020-12-01T06:59:52.778Z">
 <meta property="article:author" content="holiday">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
@@ -221,14 +221,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -304,7 +304,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-03 21:30:33" itemprop="dateModified" datetime="2020-11-03T21:30:33+08:00">2020-11-03</time>
+        <time title="修改时间：2020-12-01 14:59:52" itemprop="dateModified" datetime="2020-12-01T14:59:52+08:00">2020-12-01</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -322,14 +322,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>6.3k</span>
+      <span>6.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -358,7 +358,6 @@
 <p>隔离级别引发的问题：</p>
 <ul>
 <li>脏读</li>
-<li>修改丢失</li>
 <li>不可重复读</li>
 <li>幻读<br>不可重复读的重点在于update和delete，幻读在于insert</li>
 </ul>
@@ -375,18 +374,19 @@
 <li>频繁进行数据库操作的表，不要建立太多索引</li>
 <li>删除无用索引</li>
 </ol>
-<p><strong>聚簇索引与非聚簇索引</strong><br>聚簇索引：叶子节点存数据，非聚簇索引叶子节点存对应数据的指针。</p>
-<p>非聚簇索引都是辅助索引，像复合索引、前缀索引、唯一索引。</p>
+<p><strong>聚集索引与非聚集索引</strong><br>聚集索引：叶子节点存数据，非聚集索引叶子节点存对应数据的指针。</p>
+<p>非聚集索引都是辅助索引，像复合索引、前缀索引、唯一索引。</p>
 <p>InnoDB的二级索引叶节点存放KEY和PK_cols,先找到主键，在根据主键索引找。</p>
 <p>参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/486a514b0ded">https://www.jianshu.com/p/486a514b0ded</a></p>
-<p>B+ Tree:<br>内节点不存放数据，只保存key，可以降低树的高度，减少查找过程中磁盘I/O的存取次数，提升索引效率。。InnoDB叶子节点存数据，MyISAM存指针。</p>
+<p>B+ Tree:<br>内节点不存放数据，只保存key，可以降低树的高度，减少查找过程中磁盘I/O的存取次数，提升索引效率。InnoDB叶子节点存数据，MyISAM存指针。</p>
+<p><strong>mysql一次IO默认16k数据，bigint 8b，root node两索引元素之间的指针默认6b，一个节点大概可以存储1170个索引元素</strong></p>
+<p>删除与新增节点：<a target="_blank" rel="noopener" href="https://my.oschina.net/u/3350266/blog/4754844">https://my.oschina.net/u/3350266/blog/4754844</a></p>
 <p>hash索引： </p>
 <ul>
-<li>仅能满足 = in &lt;=&gt;查询，不能使用范围查询</li>
+<li>仅能满足 = in &lt;=&gt;查询，不能使用<strong>范围查询</strong></li>
 <li>不能排序查询</li>
 <li>不能利用部分索引键查询，对于组合索引是把组合索引键合并后一起计算hash值</li>
 <li>不能避免表扫描</li>
-<li>可能会出现大量的相同hash，降低性能</li>
 </ul>
 <p>索引注意事项：</p>
 <ul>
@@ -492,7 +492,8 @@
 <p><strong>原理</strong>：</p>
 <p><strong>在master上的操作</strong>：有数据发生改变时，会写入binlog（binary-log）中。当salve连接到master时，会启用binlog dump线程，当binlog发生变化会通知slave。</p>
 <p><strong>在slave上的操作</strong>：<strong>I/O</strong>线程，Master 服务器上的 IO 线程根据 Slave 服务器的 IO 线程请求的信息，<br>读取指定 binlog 日志文件指定位置之后的 binlog 日志信息，然后返回给 Slave 端的 IO 线程。<br>返回的信息中除了 binlog 日志内容外，还有本次返回日志内容后在 Master 服务器端的新的 binlog 文件名以及在 binlog 中的下一个指定更新位置，并将新的 binlog 文件名和位置记录到 <strong>master-info</strong>`文件中，会将master传来的<strong>binlog</strong>写入<strong>relay log</strong>中。 SQL线程，读取relay log，写入数据。</p>
-<h3 id="主从同步延迟"><a href="#主从同步延迟" class="headerlink" title="主从同步延迟"></a>主从同步延迟</h3><h3 id="主从库配置"><a href="#主从库配置" class="headerlink" title="主从库配置"></a>主从库配置</h3><p>主库：<br>[mysqld]</p>
+<h3 id="主从同步延迟"><a href="#主从同步延迟" class="headerlink" title="主从同步延迟"></a>主从同步延迟</h3><p>mysql 已支持多线程的主从复制</p>
+<h3 id="主从库配置"><a href="#主从库配置" class="headerlink" title="主从库配置"></a>主从库配置</h3><p>主库：<br>[mysqld]</p>
 <h3 id="集群扩容"><a href="#集群扩容" class="headerlink" title="集群扩容"></a>集群扩容</h3><p>N库到2N到4N，4N到8N。</p>
 <p>##主数据库端ID号<br>server_id = 1<br>##开启二进制日志<br>log-bin=mysql-bin #默认地址 /var/lib/mysql<br>binlog_format=ROW<br>##需要复制的数据库名，如果复制多个数据库，重复设置这个选项即可<br>binlog-do-db = master_db<br>##将从服务器从主服务器收到的更新记入到从服务器自己的二进制日志文件中<br>log-slave-updates<br>##控制binlog的写入频率。每执行多少次事务写入一次(这个参数性能消耗很大，但可减小MySQL崩溃造成的损失)<br>sync_binlog = 10<br>##这个参数一般用在主主同步中，用来错开自增值, 防止键值冲突<br>##auto_increment_offset = 1<br>–#这个参数一般用在主主同步中，用来错开自增值, 防止键值冲突<br>– #auto_increment_increment = 1<br>– #二进制日志自动删除的天数，默认值为0,表示“没有自动删除”，启动时和二进制日志循环时可能删除<br>expire_logs_days = 7<br>–#将函数复制到slave<br>– #log_bin_trust_function_creators = 1</p>
 <p>grant replication slave on <em>.</em> to ‘user’@’从IP’ identified by ‘PASSWORD’;<br>flush privileges;<br>show master status\G; 查看状态</p>
@@ -588,13 +589,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">42k</span>
+    <span title="站点总字数">44k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">1:20</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
