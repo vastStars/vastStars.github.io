@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="Redis">
+  <meta name="description" content="Redis 怎样的数据适合放缓存：高频被访问的数据，数据的变化频率不高，非敏感数据。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis">
 <meta property="og:url" content="http://example.com/2019/11/12/redis/index.html">
 <meta property="og:site_name" content="longlongago">
-<meta property="og:description" content="Redis">
+<meta property="og:description" content="Redis 怎样的数据适合放缓存：高频被访问的数据，数据的变化频率不高，非敏感数据。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-12T09:02:42.000Z">
-<meta property="article:modified_time" content="2020-11-08T13:39:11.250Z">
+<meta property="article:modified_time" content="2020-12-06T14:35:01.634Z">
 <meta property="article:author" content="holiday">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
@@ -205,7 +205,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Strings%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.1.</span> <span class="nav-text">Strings字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List%E5%88%97%E8%A1%A8"><span class="nav-number">1.2.</span> <span class="nav-text">List列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash%E5%93%88%E5%B8%8C"><span class="nav-number">1.3.</span> <span class="nav-text">Hash哈希</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sets%E4%B8%8Esorted-sets-%E9%9B%86%E5%90%88%E4%B8%8E%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="nav-number">1.4.</span> <span class="nav-text">sets与sorted sets 集合与有序集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bitmaps"><span class="nav-number">1.5.</span> <span class="nav-text">bitmaps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hyperloglogs"><span class="nav-number">1.6.</span> <span class="nav-text">hyperloglogs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KEYS-%E5%92%8C-SCAN"><span class="nav-number">2.</span> <span class="nav-text">KEYS 和 SCAN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash%E4%B8%8E%E4%B8%80%E8%87%B4%E6%80%A7hash"><span class="nav-number">3.</span> <span class="nav-text">hash与一致性hash</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hash"><span class="nav-number">3.1.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7hash"><span class="nav-number">3.2.</span> <span class="nav-text">一致性hash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slot"><span class="nav-number">4.</span> <span class="nav-text">Slot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%98%E6%B1%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">淘汰机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E8%AF%81%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">6.</span> <span class="nav-text">保证缓存与数据库一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">7.</span> <span class="nav-text">持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RDB"><span class="nav-number">7.1.</span> <span class="nav-text">RDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOF-append-only-file"><span class="nav-number">7.2.</span> <span class="nav-text">AOF(append-only file)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">7.3.</span> <span class="nav-text">混合持久化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pipelining"><span class="nav-number">8.</span> <span class="nav-text">Pipelining</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%83%AD%E7%82%B9%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">9.</span> <span class="nav-text">热点数据处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF%E4%B8%8E%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="nav-number">10.</span> <span class="nav-text">缓存穿透、缓存击穿与缓存雪崩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%9F%A5%E6%89%BEkey"><span class="nav-number">11.</span> <span class="nav-text">集群中查找key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E4%B8%8E%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97"><span class="nav-number">12.</span> <span class="nav-text">队列与延时队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E4%B8%8Ememcached%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">13.</span> <span class="nav-text">redis与memcached的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E9%9B%86%E7%BE%A4"><span class="nav-number">14.</span> <span class="nav-text">Redis集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA"><span class="nav-number">15.</span> <span class="nav-text">Redis集群搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E5%A4%A7key%E9%97%AE%E9%A2%98"><span class="nav-number">16.</span> <span class="nav-text">Redis 大key问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">17.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Strings%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.1.</span> <span class="nav-text">Strings字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List%E5%88%97-%E8%A1%A8"><span class="nav-number">1.2.</span> <span class="nav-text">List列&#x2F;表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash%E5%93%88%E5%B8%8C"><span class="nav-number">1.3.</span> <span class="nav-text">Hash哈希</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sets%E4%B8%8Esorted-sets-%E9%9B%86%E5%90%88%E4%B8%8E%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="nav-number">1.4.</span> <span class="nav-text">sets与sorted sets 集合与有序集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bitmaps"><span class="nav-number">1.5.</span> <span class="nav-text">bitmaps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hyperloglogs"><span class="nav-number">1.6.</span> <span class="nav-text">hyperloglogs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KEYS-%E5%92%8C-SCAN"><span class="nav-number">2.</span> <span class="nav-text">KEYS 和 SCAN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash%E4%B8%8E%E4%B8%80%E8%87%B4%E6%80%A7hash"><span class="nav-number">3.</span> <span class="nav-text">hash与一致性hash</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hash"><span class="nav-number">3.1.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7hash"><span class="nav-number">3.2.</span> <span class="nav-text">一致性hash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slot"><span class="nav-number">4.</span> <span class="nav-text">Slot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%98%E6%B1%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">淘汰机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E8%AF%81%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">6.</span> <span class="nav-text">保证缓存与数据库一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">7.</span> <span class="nav-text">持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RDB"><span class="nav-number">7.1.</span> <span class="nav-text">RDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOF-append-only-file"><span class="nav-number">7.2.</span> <span class="nav-text">AOF(append-only file)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">7.3.</span> <span class="nav-text">混合持久化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">8.</span> <span class="nav-text">分布式锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis"><span class="nav-number">8.1.</span> <span class="nav-text">redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zookeeper"><span class="nav-number">8.2.</span> <span class="nav-text">zookeeper</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E4%B8%8E%E5%93%A8%E5%85%B5"><span class="nav-number">9.</span> <span class="nav-text">主从与哨兵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pipelining"><span class="nav-number">10.</span> <span class="nav-text">Pipelining</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%83%AD%E7%82%B9%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">11.</span> <span class="nav-text">热点数据处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF%E4%B8%8E%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="nav-number">12.</span> <span class="nav-text">缓存穿透、缓存击穿与缓存雪崩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%9F%A5%E6%89%BEkey"><span class="nav-number">13.</span> <span class="nav-text">集群中查找key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E4%B8%8E%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97"><span class="nav-number">14.</span> <span class="nav-text">队列与延时队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E4%B8%8Ememcached%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">15.</span> <span class="nav-text">redis与memcached的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E9%9B%86%E7%BE%A4"><span class="nav-number">16.</span> <span class="nav-text">Redis集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA"><span class="nav-number">17.</span> <span class="nav-text">Redis集群搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E5%A4%A7key%E9%97%AE%E9%A2%98"><span class="nav-number">18.</span> <span class="nav-text">Redis 大key问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">19.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -221,7 +221,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -234,7 +234,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -304,7 +304,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-08 21:39:11" itemprop="dateModified" datetime="2020-11-08T21:39:11+08:00">2020-11-08</time>
+        <time title="修改时间：2020-12-06 22:35:01" itemprop="dateModified" datetime="2020-12-06T22:35:01+08:00">2020-12-06</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -322,14 +322,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.7k</span>
+      <span>4.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
+      <span>8 分钟</span>
     </span>
 </div>
 
@@ -341,27 +341,29 @@
     
     <div class="post-body" itemprop="articleBody">
         <p><strong>Redis</strong></p>
+<p>怎样的数据适合放缓存：高频被访问的数据，数据的变化频率不高，非敏感数据。</p>
 <a id="more"></a>
 
 <ul>
 <li>纯内存操作</li>
 <li>使用IO多路复用技术</li>
-<li>非CPU密集型任务</li>
-<li>单线程处理请求</li>
+<li>高效的数据存储</li>
+<li>单线程</li>
 </ul>
 <h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="Strings字符串"><a href="#Strings字符串" class="headerlink" title="Strings字符串"></a>Strings字符串</h3><p>set,get</p>
 <p><strong>set key value</strong>  /  <strong>get key</strong>  /  <strong>MSET key1 value1 key2 value2</strong>  / <strong>MGET key1 key2</strong> /  <strong>GETSET key value1</strong> 返回value</p>
 <p><strong>Redis 规定了字符串的长度不得超过 512 MB。</strong></p>
-<h3 id="List列表"><a href="#List列表" class="headerlink" title="List列表"></a>List列表</h3><p>lpush, rpush, lpop, rpop, lrange</p>
+<p>使用SDS(Simple Dynamic String)的结构来保存字符串。</p>
+<h3 id="List列-表"><a href="#List列-表" class="headerlink" title="List列/表"></a>List列/表</h3><p>lpush, rpush, lpop, rpop, lrange</p>
 <p><strong>lpush list value</strong>  / <strong>rpush list value</strong>  /  <strong>lrange mylist 0 -1</strong> / <strong>LPOP list 队列是先进先出的数据结构 读取一次value</strong>  /  <strong>RPOP books 栈是先进后出的数据结构</strong></p>
 <h3 id="Hash哈希"><a href="#Hash哈希" class="headerlink" title="Hash哈希"></a>Hash哈希</h3><p>hset, hget, hgetall</p>
 <p><strong>扩容</strong>： 渐进式<code>rehash</code>，保留两个新旧<strong>hash</strong>结构，扩容的数组为原来的两倍，如果redis正在做<strong>bgsave</strong>，尽量不去扩容，如果长度达到一维数组的5倍，强制扩容。</p>
-<p>底层数据结构：ziplist与hashtable</p>
-<p>ziplist结构：zlbytes, zltail, alten, entry，···</p>
+<p>底层数据结构：ziplist与dict(hash字典)</p>
+<p>ziplist结构：zlbytes, zltail, alten, entry，···zlend</p>
 <p>两个条件：hash-max-ziplist-entries 512  数据项(filed-value)超过512; hash-max-ziplist-value 64 value长度超过64; </p>
 <p>缺点：每次插入修改可能会造成内存拷贝，数据够多时查询速度降低。</p>
 <h3 id="sets与sorted-sets-集合与有序集合"><a href="#sets与sorted-sets-集合与有序集合" class="headerlink" title="sets与sorted sets 集合与有序集合"></a>sets与sorted sets 集合与有序集合</h3><p>sadd, spop, smembers, sunion;<br>zadd, zrange, zrem, acard; </p>
-<p>skipList: <a target="_blank" rel="noopener" href="http://zhangtielei.com/posts/blog-redis-skiplist.html">http://zhangtielei.com/posts/blog-redis-skiplist.html</a></p>
+<p>skipList: y</p>
 <h3 id="bitmaps"><a href="#bitmaps" class="headerlink" title="bitmaps"></a>bitmaps</h3><p>bloom filter 布隆过滤器</p>
 <p><strong>bf.add</strong> / <strong>bd.madd</strong> / <strong>bf.mexists</strong></p>
 <h3 id="hyperloglogs"><a href="#hyperloglogs" class="headerlink" title="hyperloglogs"></a>hyperloglogs</h3><h2 id="KEYS-和-SCAN"><a href="#KEYS-和-SCAN" class="headerlink" title="KEYS 和 SCAN"></a>KEYS 和 SCAN</h2><ul>
@@ -376,18 +378,23 @@
 <h3 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h3><p>假设有5个主Redis库，hash(data)%5，来确定服务器。但在服务器数量出现变动时，hash会变得不可靠，无法从缓存中获取数据，则会向数据库请求数据。</p>
 <h3 id="一致性hash"><a href="#一致性hash" class="headerlink" title="一致性hash"></a>一致性hash</h3><p>一致性hash对2^32取模，将整个哈希值空间组成一个虚拟的圆环（0-2^32-1）,称为hash环;<br>根据key计算，确定在环上的位置，沿顺时针方向向前查找，第一台服务器就是定位到的服务器。</p>
 <h2 id="Slot"><a href="#Slot" class="headerlink" title="Slot"></a>Slot</h2><p>redis有16384个hash槽(Slot). 建议最多1000个master。Redis Cluster 会对key使用CRC16算法计算hash，然后对16384取模来确定key所属槽（hash tag会打破这个规则，保证多个键被分配到同一个槽）。</p>
-<h2 id="淘汰机制"><a href="#淘汰机制" class="headerlink" title="淘汰机制"></a>淘汰机制</h2><p>过期策略： 惰性删除：假如你的过期 key，靠定期删除没有被删除掉，还停留在内存里，除非你的系统去查一下那个 key，才会被 redis 给删除掉。</p>
+<h2 id="淘汰机制"><a href="#淘汰机制" class="headerlink" title="淘汰机制"></a>淘汰机制</h2><p>过期策略：  惰性删除：假如你的过期 key，靠定期删除没有被删除掉，还停留在内存里，除非你的系统去查一下那个 key，才会被 redis 给删除掉。</p>
 <p>定期删除：redis 默认是每隔 100ms 就<strong>随机抽取</strong>一些设置了过期时间的 key，检查其是否过期。</p>
 <p><code>maxmemory</code>，最大内存设置，达到后会触发淘汰机制。</p>
 <ul>
 <li><p><code>volatile-lru(Least Recently Used)</code>： 从设置过期时间中选最少使用的淘汰</p>
-<p>一个FIFO队列</p>
 <ul>
 <li>新数据插入链表头部</li>
-<li>每当缓存命中时，将数据移至链表头部</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>每当缓存命中时，将数据移至链表头部<ul>
 <li>当链表满的时候，丢弃</li>
 </ul>
 </li>
+</ul>
+<ul>
 <li><p><code>volatile-ttl(time to live)</code>:  从设置过期时间中选将要过期的淘汰</p>
 </li>
 <li><p><code>volatile-random</code>: 从设置过期时间中随机淘汰</p>
@@ -418,6 +425,24 @@
 <p>问题：先删除了缓存，然后要去修改数据库，此时还没修改。一个请求过来，去读缓存，发现缓存空了，去查询数据库，<strong>查到了修改前的旧数据</strong>，放到了缓存中。</p>
 </li>
 </ul>
+<ol>
+<li><p>先更新数据库，在更新缓存（不采用）</p>
+<ul>
+<li>线程安全角度，A与B两个线程先后进行更新，A应该比B先更新cache，结果因网络原因，B比A先更新，就出现脏读。</li>
+<li>业务角度：写多读少数据库，频繁更新，浪费性能；如果每次写入cache都要经过一系列计算。</li>
+</ul>
+</li>
+<li><p>先删除缓存，在更新数据库</p>
+<ul>
+<li><p>线程A删除了缓存，还没写入数据库，B线程去缓存读，发现没有，从数据库读写入缓存，A写入数据库。</p>
+<p>解决：延时双删</p>
+</li>
+</ul>
+</li>
+<li><p>先更新数据库，在删除缓存</p>
+</li>
+</ol>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/rjzheng/p/9041659.html">https://www.cnblogs.com/rjzheng/p/9041659.html</a></p>
 <h2 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h2><h3 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h3><p>save 900 1 #在900秒(15分钟)之后，如果至少有1个key发生变化，Redis就会自动触发BGSAVE命令创建快照。`</p>
 <p>bgsave原理: fork和cow(copy on write);fork创建子线程，cow与父进程共享写数据。</p>
 <h3 id="AOF-append-only-file"><a href="#AOF-append-only-file" class="headerlink" title="AOF(append-only file)"></a>AOF(append-only file)</h3><p>开启： <code>appendonly</code> yes<br>不同持久化方式：</p>
@@ -432,8 +457,21 @@
 <li><code>auto-aof-rewrite-min-size 64mb</code> 没超过64M 不重写</li>
 </ul>
 <h3 id="混合持久化"><a href="#混合持久化" class="headerlink" title="混合持久化"></a>混合持久化</h3><p>重启<strong>redis</strong>时使用<strong>rdb</strong>来恢复会丢失大量数据，使用<strong>AOF</strong>日志重放，性能会比<strong>rdb</strong>慢很多。</p>
+<h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><h3 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h3><h3 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h3><p>zookeeper采用树状节点的方式来保存我们的注册信息(znode)。</p>
+<p>羊群效应：一旦锁失效，会有上百个客户端去争抢这个锁。</p>
+<p>时序节点：创建临时顺序节点</p>
+<h2 id="主从与哨兵"><a href="#主从与哨兵" class="headerlink" title="主从与哨兵"></a>主从与哨兵</h2><p>主机挂了如何处理：</p>
+<ol>
+<li>需要选择一台从机作为新的主机，根据偏移量来选择</li>
+<li>将选中的从机变为新主机 <code>slaveof no noe</code></li>
+<li>客户端连接新主机</li>
+<li>其它从机与新主机建立主从关系 <code>slaveof newip newport</code></li>
+</ol>
+<p>哨兵：将上述一系列操作自动化</p>
 <h2 id="Pipelining"><a href="#Pipelining" class="headerlink" title="Pipelining"></a>Pipelining</h2><p>执行连续且无相关性的命令。</p>
 <h2 id="热点数据处理"><a href="#热点数据处理" class="headerlink" title="热点数据处理"></a>热点数据处理</h2><p>防止大量请求同一台机器上的key.</p>
+<p>二级缓存</p>
+<p>备份热点key，将key在每个redis都保存一份</p>
 <ul>
 <li>本地缓存</li>
 <li>proxy 计算</li>
@@ -562,7 +600,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:21</span>
+    <span title="站点阅读时长">1:23</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
